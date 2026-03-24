@@ -1,0 +1,31 @@
+name: Build and Deploy CV
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Compile LaTeX
+        uses: xu-cheng/latex-action@v3
+        with:
+          # Sửa đường dẫn vì file nằm trong src/
+          root_file: src/main.tex
+          compiler: xelatex 
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: CV-Draft
+          path: src/main.pdf
+
+      # Tự động đẩy file PDF lên nhánh 'output' để lấy link trực tiếp
+      - name: Deploy PDF to Branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./src
+          publish_branch: output
+          publish_as_assets: true
