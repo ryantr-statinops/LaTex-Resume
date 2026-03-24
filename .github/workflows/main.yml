@@ -11,21 +11,15 @@ jobs:
       - name: Compile LaTeX
         uses: xu-cheng/latex-action@v3
         with:
-          # Sửa đường dẫn vì file nằm trong src/
+          # Chỉ định đúng đường dẫn đến file main.tex trong thư mục src
           root_file: src/main.tex
-          compiler: xelatex 
+          # Dùng xelatex để hỗ trợ tốt nhất cho font và ảnh
+          compiler: xelatex
+          # Cho phép cài đặt thêm các gói lệnh còn thiếu tự động
+          latexmk_use_xelatex: true
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: CV-Draft
+          name: CV-Professional
           path: src/main.pdf
-
-      # Tự động đẩy file PDF lên nhánh 'output' để lấy link trực tiếp
-      - name: Deploy PDF to Branch
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./src
-          publish_branch: output
-          publish_as_assets: true
