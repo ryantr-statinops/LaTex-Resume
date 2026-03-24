@@ -11,12 +11,9 @@ jobs:
       - name: Compile LaTeX
         uses: xu-cheng/latex-action@v3
         with:
-          # Chỉ định đúng đường dẫn đến file main.tex trong thư mục src
           root_file: src/main.tex
-          # Dùng xelatex để hỗ trợ tốt nhất cho font và ảnh
-          compiler: xelatex
-          # Cho phép cài đặt thêm các gói lệnh còn thiếu tự động
-          latexmk_use_xelatex: true
+          compiler: xelatex # Sử dụng xelatex trực tiếp
+          args: "-pdf -interaction=nonstopmode -halt-on-error"
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4

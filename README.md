@@ -1,4 +1,7 @@
 ![Build Status](https://github.com/ryantr-statinops/LaTeX-Resume/actions/workflows/main.yml/badge.svg)
+
+
+
 # 📄 My Professional LaTeX CV
 
 Dự án này tự động biên dịch CV từ mã nguồn LaTeX sang PDF mỗi khi có thay đổi.
