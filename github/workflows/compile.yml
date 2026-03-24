@@ -11,23 +11,21 @@ jobs:
       - name: Compile LaTeX
         uses: xu-cheng/latex-action@v3
         with:
-          # Chỉ định file main.tex ở thư mục gốc
-          root_file: main.tex
-          # Dùng xelatex để hỗ trợ ảnh và font tốt hơn
+          # Sửa đường dẫn vì file nằm trong src/
+          root_file: src/main.tex
           compiler: xelatex 
 
-      - name: Upload PDF to Releases
-        if: startsWith(github.ref, 'refs/tags/')
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: main.pdf
-          asset_name: My_Professional_CV.pdf
-          tag: ${{ github.ref }}
-          overwrite: true
-
-      - name: Upload Artifact (Bản nháp)
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: CV-Draft
-          path: main.pdf
+          path: src/main.pdf
+
+      # Tự động đẩy file PDF lên nhánh 'output' để lấy link trực tiếp
+      - name: Deploy PDF to Branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./src
+          publish_branch: output
+          publish_as_assets: true
